@@ -25,7 +25,21 @@
 
   <body>
     {% include 'navbar.html' %}
-   
+
+    <!--Messages-->
+ {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <p class="alert alert-{{ message.level_tag }}">
+                {{ message }}
+            </p>
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+<!--End Message-->
+
     
     {% block content %}{% endblock %}
      {% include 'footer.html' %}

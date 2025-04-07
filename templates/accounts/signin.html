@@ -7,11 +7,14 @@
     <div class="login-area">
       <!-- heading -->
       <h3>Sign In, To Your Account</h3>
-      <form role="form" id="login-form">
+      <form role="form" id="login-form" method="post" action="{% url 'signin' %}">
+     
+        {% csrf_token %}
         <div class="form-group">
           <input
             type="text"
             class="form-control"
+            name="username"
             id="exampleInputUser1"
             placeholder="Username"
           />
@@ -19,6 +22,7 @@
         <div class="form-group">
           <input
             type="password"
+            name="password"
             class="form-control"
             id="exampleInputPassword1"
             placeholder="Password"

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>User Profile</h1>
+    <div>
+        <h2>{{ user_profile.username }}</h2>
+        <p>Bio: {{ user_profile.bio }}</p>
+        {% if user_profile.profile_picture %}
+        <img src="{{ user_profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid mb-2" style="max-width: 200px;">
+        {% else %}
+        <p>No profile picture available</p>
+        {% endif %}
+        {% if user.is_authenticated %}
+        {% if user == user_profile %}
+        <div class="d-flex justify-content-between p-2">
+            <a href="{% url 'settings' %}" class="btn btn-primary">Update Profile</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger">Log out</a>
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

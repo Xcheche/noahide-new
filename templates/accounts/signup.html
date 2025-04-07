@@ -1,47 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+<!-- banner -->
+<div class="banner">
+  <div class="container">
+    <!-- form content / register area -->
+    <div class="register-area">
+      <!-- heading -->
+      <h3>Sign Up, For An Account</h3>
+      <form role="form" id="register-form" method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <input type="text" name="fullname" class="form-control" placeholder="Full Name" required />
+    </div>
+    <div class="form-group">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-info">
+                <input type="radio" name="gender" value="male" required /> Male
+            </label>
+            <label class="btn btn-info">
+                <input type="radio" name="gender" value="female" required /> Female
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="email" name="email" class="form-control" placeholder="Enter email" required />
+    </div>
+    <div class="form-group">
+        <input type="text" name="username" class="form-control" placeholder="Enter username" required />
+    </div>
+    <div class="form-group">
+        <input type="password" name="password" class="form-control" placeholder="Password" required />
+    </div>
+    <div class="form-group">
+        <input type="password" name="password2" class="form-control" placeholder="Re-enter Password" required />
+    </div>
+    <div class="checkbox form-group">
+        <label>
+            <input name="agree_terms" type="checkbox" required> I agree with all terms and conditions.
+        </label>
+    </div>
+    <button type="submit" class="btn btn-default">Sign Up</button>
+    <p>Already have an account? <a href="{% url 'signin' %}">Log in here</a>.</p>
+</form>
 
-			{% extends 'base.html' %}
-			{% block content %}
-			<!-- banner -->
-			<div class="banner">
-				<div class="container">
-					<!-- form content / register area -->
-					<div class="register-area">
-						<!-- heading -->
-						<h3>Sign Up, For An Account</h3>
-						<form role="form" id="register-form">
-							<div class="form-group">
-								<input type="text" class="form-control" id="exampleInputName1" placeholder="Full Name">
-							</div>
-							<div class="form-group">
-								<div class="btn-group" data-toggle="buttons">
-									<label class="btn btn-info">
-										<input type="radio" name="options" id="option1" > Male
-									</label>
-									<label class="btn btn-info">
-										<input type="radio" name="options" id="option2"> Female
-									</label>
-								</div>
-							</div>
-							<div class="form-group">
-								<input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-							</div>
-							<div class="form-group">
-								<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-							</div>
-							<div class="form-group">
-								<input type="password" class="form-control" id="exampleInputPassword2" placeholder="Re-Password">
-							</div>
-							<div class="checkbox form-group">
-								<label>
-									<input type="checkbox"> I agree with all terms and conditions.
-								</label>
-							</div>
-							<button type="submit" class="btn btn-default">SignUp</button>&nbsp;
-							<p>Already have an account? <a href="{% url 'login' %}">Log in here</a>.</p>					<button type="reset" class="btn btn-default">Reset</button>
-						</form>
-					</div>
-				</div>
-			</div>
-			<!-- banner end -->
-	
-{% endblock %}			
+    </div>
+  </div>
+</div>
+<!-- banner end -->
+
+{% endblock %}
