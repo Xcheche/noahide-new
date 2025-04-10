@@ -13,6 +13,8 @@
 
     <!-- Styles -->
     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" />
     <!-- Font awesome CSS -->
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
@@ -40,8 +42,10 @@
 
 <!--End Message-->
 
-    
-    {% block content %}{% endblock %}
+   <div class="container">
+     
+     {% block content %}{% endblock %}
+   </div>
      {% include 'footer.html' %}
 
     <!-- Javascript files -->

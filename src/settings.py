@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = os.getenv('DEBUG', 'True') == 'False'
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost', '1bc0-160-152-111-180.ngrok-free.app']  # Corrected name
+ALLOWED_HOSTS = ['127.0.0.1','localhost', 'a00f-160-152-93-153.ngrok-free.app']  # Corrected name
 # ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -46,9 +46,11 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 PROJECT_APPS = ['accounts','blog',]
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    'ckeditor',
+   
+]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
-
 
 
 MIDDLEWARE = [
@@ -179,4 +181,29 @@ MESSAGE_TAGS = {
 }
 
 
+# Disable email verification
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# Redirect users after login/logout
+  # Redirect to profile after login
+  
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = "signin"  # Redirect to login after logout
+
+
+
+#Upload path for ckeditor
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 700,
+    }
+}
+
+

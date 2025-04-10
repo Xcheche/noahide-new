@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<article class="media content-section">
+    <img
+        class="rounded-circle article-img"
+        src="{{ post.author.profile_picture.url }}"
+        style="float: left; margin-right: 15px; width: 150px; height: 150px;"
+    />
+    <div class="media-body">
+        <div class="post-metadata">
+             <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+                <small class="text-muted">
+                        {{ post.created_at|date:"F d, Y" }}
+            <small class="text-muted">{{ post.date_posted }}</small>
+        </div>
+        <h2>{{ post.title }}</h2>
+           <img    src="{{post.image.url}}" alt="" style="margin-bottom: 10px;" />
+        <p class="post-content" style="margin-bottom: 10px;">{{ post.content|safe }}</p>
+     
+    </div>
+</article>
+<div class="text-center">
+    <a href="{% url 'home' %}" style="margin-top: 10px;" class="btn btn-default">Back to Home</a>
+</div>
+{% endblock %}
