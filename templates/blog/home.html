@@ -1,220 +1,217 @@
 {% extends "base.html" %}
-{% block content %}
-			{% load static %}
-			<!-- banner -->
-			<div class="banner">
-				<div class="container">
-					<!-- heading -->
-					<h2>I'm Banner Heading for This Page</h2>
-					<!-- paragraph -->
-					<p>It is our belief that in order to be most efficient it requires adaptive technology and software our customers can focus on their core business.</p>
-				</div>
-			</div>
-			<!-- banner end -->
-			
-			<!-- after banner -->
-			<div class="after-banner">
-				<div class="container">
-					<div class="row">
-						<div class="col-md-4 col-sm-4">
-							<!-- after banner item -->
-							<div class="ab-item">
-								<!-- heading -->
-								<h3>Focus on Systems</h3>
-								<!-- paragraph -->
-								<p>While our prices are competitive, it's the value that's unmatched.</p>
-								<br>
-								<a href="#">Read More</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4">
-							<!-- after banner item -->
-							<div class="ab-item">
-								<!-- heading -->
-								<h3>Plan of Action</h3>
-								<!-- paragraph -->
-								<p>While our prices are competitive, it's the value that's unmatched.</p>
-								<br>
-								<a href="#">Read More</a>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-4">
-							<!-- after banner item -->
-							<div class="ab-item">
-								<!-- heading -->
-								<h3>Quality Compliance</h3>
-								<!-- paragraph -->
-								<p>While our prices are competitive, it's the value that's unmatched.</p>
-								<br>
-								<a href="#">Read More</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- after banner end-->
-			
-			<!-- events -->
-			<div class="event" id="event">
-				<div class="container">
-					<div class="default-heading">
-						<!-- heading -->
-						<h2>Upcoming events</h2>
-					</div>
-					<div id="event-carousel" class="carousel slide" data-ride="carousel">
-						<!-- Indicators -->
-						<ol class="carousel-indicators">
-							<li data-target="#event-carousel" data-slide-to="0" class="active"></li>
-							<li data-target="#event-carousel" data-slide-to="1"></li>
-							<li data-target="#event-carousel" data-slide-to="2"></li>
-						</ol>
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
-							<div class="item active">
-								<div class="event-item">
-									<!-- image -->
-									<img class="img-responsive" src="{% static 'img/event/1.jpg' %}" alt="Events" />
-									<!-- heading -->
-									<h4><a href="#">Rihanna, Eminem on stage</a></h4>
-									<!-- sub text -->
-									<span class="sub-text">Integrating technology and software solutions.</span>
-									<!-- paragraph -->
-									<p>It is our belief that in order to be most efficient it requires adaptive technology and software solutions.</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="event-item">
-									<!-- image -->
-									<img class="img-responsive" src="{% static 'img/event/2.jpg' %}" alt="Events" />
-									<!-- heading -->
-									<h4><a href="#">Dr. Dre on stage live</a></h4>
-									<!-- sub text -->
-									<span class="sub-text">Integrating technology and software solutions.</span>
-									<!-- paragraph -->
-									<p>It is our belief that in order to be most efficient it requires adaptive technology and software solutions.</p>
-								</div>
-							</div>
-							<div class="item">
-								<div class="event-item">
-									<!-- image -->
-									<img class="img-responsive" src="{% static 'img/event/3.jpg' %}" alt="Events" />
-									<!-- heading -->
-									<h4><a href="#">Macaroons live Party</a></h4>
-									<!-- sub text -->
-									<span class="sub-text">Integrating technology and software solutions.</span>
-									<!-- paragraph -->
-									<p>It is our belief that in order to be most efficient it requires adaptive technology and software solutions.</p>
-								</div>
-							</div>
-						</div>
-						<!-- Controls -->
-						<a class="left carousel-control" href="#event-carousel" role="button" data-slide="prev">
-							<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="right carousel-control" href="#event-carousel" role="button" data-slide="next">
-							<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-							<span class="sr-only">Next</span>
-						</a>
-					</div>
-				</div>
-			</div>
-			<!-- events end -->
-			<!-- blog -->
-			<div class="blog" id="blog">
-				<div class="container">
-					<div class="default-heading">
-						 <h2>Latest Blogs</h2>
-					</div>
-						<!-- heading -->
-					{% include "blog/post_list.html" %}
+ {% load static %}
+ {% block content %}
+ 
+<!-- banner -->
+<div class="banner">
+  <div class="container">
+    <!-- heading -->
+	<h2 class="display-4">NoahideWisdom</h2>
+    <!-- paragraph -->
+    <p class="fade-text">
+      Welcome to NoahideWisdom, a platform dedicated to exploring the teachings
+      of Kabbalah and its relevance in today's world. Our mission is to provide
+      insights into the mystical aspects of Judaism and how they can guide us in
+      our daily lives. Kabbalah is a mystical tradition within Judaism that
+      explores the nature of divinity, the creation of the universe, and the
+      human soul. It seeks to uncover hidden meanings in sacred texts and
+      provides a framework for spiritual growth and understanding through
+      concepts like the Tree of Life and divine emanations.
+    </p>
+  </div>
+</div>
+<!-- banner end -->
 
-					{% include 'blog/pagination.html' %}
-			
-			<!-- subscribe -->
-			<div class="subscribe" id="subscribe">
-				<div class="container">
-					<!-- subscribe content -->
-					<div class="sub-content">
-						<h3>Subscribe Here for Updates</h3>
-						<form role="form">
-							<div class="input-group">
-								<input type="text" class="form-control" placeholder="Email...">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button">Subscribe</button>
-									</span>
-							</div><!-- /input-group -->
-						</form>
-					</div>
-				</div>
-			</div>
-			<!-- subscribe end -->
-			
-			<!-- team -->
-			<div class="team" id="team">
-				<div class="container">
-					<div class="default-heading">
-						<!-- heading -->
-						<h2>Executing Team</h2>
-					</div>
-					<div class="row">
-						<div class="col-md-3 col-sm-3">
-							<!-- team member -->
-							<div class="member">
-								<!-- images -->
-								<img class="img-responsive" src="{% static 'img/team/1.jpg' %}" alt="Team Member" />
-								<!-- heading -->
-								<h3>Adam Miser</h3>
-								<!-- designation -->
-								<span class="dig">CEO</span>
-								<!-- email -->
-								<a href="#">executive.member@bloger.com</a>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-3">
-							<!-- team member -->
-							<div class="member">
-								<!-- images -->
-								<img class="img-responsive" src="{% static 'img/team/2.jpg' %}" alt="Team Member" />
-								<!-- heading -->
-								<h3>Adam Miser</h3>
-								<!-- designation -->
-								<span class="dig">CEO</span>
-								<!-- email -->
-								<a href="#">executive.member@bloger.com</a>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-3">
-							<!-- team member -->
-							<div class="member">
-								<!-- images -->
-								<img class="img-responsive" src="{% static 'img/team/1.jpg' %}" alt="Team Member" />
-								<!-- heading -->
-								<h3>Adam Miser</h3>
-								<!-- designation -->
-								<span class="dig">CEO</span>
-								<!-- email -->
-								<a href="#">executive.member@bloger.com</a>
-							</div>
-						</div>
-						<div class="col-md-3 col-sm-3">
-							<!-- team member -->
-							<div class="member">
-								<!-- images -->
-								<img class="img-responsive" src="{% static 'img/team/2.jpg' %}" alt="Team Member" />
-								<!-- heading -->
-								<h3>Adam Miser</h3>
-								<!-- designation -->
-								<span class="dig">CEO</span>
-								<!-- email -->
-								<a href="#">executive.member@bloger.com</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- team end -->
-			
+<!-- after banner -->
+<div class="after-banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-4">
+        <!-- after banner item -->
+        <div class="ab-item">
+          <!-- heading -->
+          <h3>Focus on Systems</h3>
+          <!-- paragraph -->
+          <p>
+            While our prices are competitive, it's the value that's unmatched.
+          </p>
+          <br />
+          <a href="#">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <!-- after banner item -->
+        <div class="ab-item">
+          <!-- heading -->
+          <h3>Plan of Action</h3>
+          <!-- paragraph -->
+          <p>
+            While our prices are competitive, it's the value that's unmatched.
+          </p>
+          <br />
+          <a href="#">Read More</a>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+        <!-- after banner item -->
+        <div class="ab-item">
+          <!-- heading -->
+          <h3>Quality Compliance</h3>
+          <!-- paragraph -->
+          <p>
+            While our prices are competitive, it's the value that's unmatched.
+          </p>
+          <br />
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- after banner end-->
 
+<!-- events -->
+<div class="event" id="event">
+  <div class="container">
+    <div class="default-heading">
+      <!-- heading -->
+      <h2>Upcoming events</h2>
+    </div>
+    <div id="event-carousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#event-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#event-carousel" data-slide-to="1"></li>
+        <li data-target="#event-carousel" data-slide-to="2"></li>
+      </ol>
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+        <div class="item active">
+          <div class="event-item">
+            <!-- image -->
+            <img
+              class="img-responsive"
+              src="{% static 'img/event/1.jpg' %}"
+              alt="Events"
+            />
+            <!-- heading -->
+            <h4><a href="#">Rihanna, Eminem on stage</a></h4>
+            <!-- sub text -->
+            <span class="sub-text"
+              >Integrating technology and software solutions.</span
+            >
+            <!-- paragraph -->
+            <p>
+              It is our belief that in order to be most efficient it requires
+              adaptive technology and software solutions.
+            </p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="event-item">
+            <!-- image -->
+            <img
+              class="img-responsive"
+              src="{% static 'img/event/2.jpg' %}"
+              alt="Events"
+            />
+            <!-- heading -->
+            <h4><a href="#">Dr. Dre on stage live</a></h4>
+            <!-- sub text -->
+            <span class="sub-text"
+              >Integrating technology and software solutions.</span
+            >
+            <!-- paragraph -->
+            <p>
+              It is our belief that in order to be most efficient it requires
+              adaptive technology and software solutions.
+            </p>
+          </div>
+        </div>
+        <div class="item">
+          <div class="event-item">
+            <!-- image -->
+            <img
+              class="img-responsive"
+              src="{% static 'img/event/3.jpg' %}"
+              alt="Events"
+            />
+            <!-- heading -->
+            <h4><a href="#">Macaroons live Party</a></h4>
+            <!-- sub text -->
+            <span class="sub-text"
+              >Integrating technology and software solutions.</span
+            >
+            <!-- paragraph -->
+            <p>
+              It is our belief that in order to be most efficient it requires
+              adaptive technology and software solutions.
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Controls -->
+      <a
+        class="left carousel-control"
+        href="#event-carousel"
+        role="button"
+        data-slide="prev"
+      >
+        <span
+          class="glyphicon glyphicon-chevron-left"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="right carousel-control"
+        href="#event-carousel"
+        role="button"
+        data-slide="next"
+      >
+        <span
+          class="glyphicon glyphicon-chevron-right"
+          aria-hidden="true"
+        ></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- events end -->
+<!-- blog -->
+<div class="blog" id="blog">
+  <div class="container">
+    <div class="default-heading">
+      <h2>Latest Blogs</h2>
+    </div>
+    <!-- heading -->
+    {% include "blog/post_list.html" %} {% include "blog/paginator.html" %}
 
- {% endblock %}           
+    <!-- <div class="text-center">
+						<a href="#" class="btn btn-default">See More</a>
+					</div> -->
+  </div>
+
+  <!-- subscribe -->
+  <div class="subscribe" id="subscribe">
+    <div class="container">
+      <!-- subscribe content -->
+      <div class="sub-content">
+        <h3>Subscribe Here for Updates</h3>
+        <form role="form">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Email..." />
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Subscribe</button>
+            </span>
+          </div>
+          <!-- /input-group -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- subscribe end -->
+
+  {% endblock %}
+</div>

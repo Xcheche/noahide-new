@@ -4,26 +4,18 @@ from django.views.generic import (TemplateView,ListView, DetailView)
 from blog.models import Post
 from src import settings
 from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator
+
 # Create your views here.
 
-
-class HomeView(TemplateView):
+class HomeView(ListView):
+    model = Post
     template_name = 'blog/home.html'
+    context_object_name = 'posts'
+    paginate_by = 3  # Number of posts per page
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Add the published posts to the context
-        context['posts'] = Post.objects.filter(status='published').order_by('-created_at')
-        
-        # Pagination
-        paginator = Paginator('posts', 2)  # Show 3 posts per page
-        page_number = self.request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-
-        # Add paginated posts to context
-        context['page_obj'] = page_obj
-        return context
+    def get_queryset(self):
+        return Post.objects.filter(status='published').order_by('-created_at')
+    
 # class HomeView(TemplateView):
 #     template_name = 'blog/home.html'
 
@@ -58,6 +50,8 @@ class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'  
     context_object_name = 'posts'
+    
+    paginate_by = 3
 
     def get_queryset(self):
         User = get_user_model()  # Get the actual custom User model

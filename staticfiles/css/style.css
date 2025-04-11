@@ -473,3 +473,17 @@ footer .copy-right {
 @media (max-width: 991px){
 
 }
+
+
+
+
+/* animation */
+	@keyframes fadeInOut {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.fade-text {
+    animation: fadeInOut 10s infinite; /* Change 3s to control speed */
+}

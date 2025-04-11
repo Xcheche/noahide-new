@@ -129,6 +129,7 @@ header .navbar-brand img {
 	padding-top: 120px;
 	padding-bottom: 120px;
 	text-align: center;
+	margin-top: 25px;
 }
 
 .banner h2 {
@@ -472,4 +473,18 @@ footer .copy-right {
  */
 @media (max-width: 991px){
 
+}
+
+
+
+
+/* animation */
+	@keyframes fadeInOut {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.fade-text {
+    animation: fadeInOut 15s infinite; /* Change 3s to control speed */
 }
