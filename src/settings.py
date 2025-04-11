@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = os.getenv('DEBUG', 'True') == 'False'
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost', 'a865-160-152-176-145.ngrok-free.app']  # Corrected name
+ALLOWED_HOSTS = ['127.0.0.1','localhost', 'cbe0-160-152-117-50.ngrok-free.app']  # Corrected name
 # ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -91,6 +91,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'test_db.sqlite3',
     }
 }
 
