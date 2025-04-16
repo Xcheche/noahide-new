@@ -23,6 +23,8 @@
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="#" />
+    
+    
   </head>
 
   <body>
@@ -62,21 +64,7 @@
     <!-- Custom JS -->
     <script src="{% static 'js/custom.js' %}"></script>
 
-    <!-- <script>
-    document.addEventListener("click", function(e) {
-        if (e.target.classList.contains("page-link")) {
-            e.preventDefault();
-            fetch(e.target.href)
-                .then(response => response.text())
-                .then(html => {
-                    let parser = new DOMParser();
-                    let doc = parser.parseFromString(html, "text/html");
-                    document.querySelector("#post_list").innerHTML = doc.querySelector("#post_list").innerHTML;
-                    document.querySelector("#pagination").innerHTML = doc.querySelector("#pagination").innerHTML;
-                });
-        }
-    });
-</script> -->
+    
 
     
   </body>

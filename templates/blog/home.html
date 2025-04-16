@@ -1,12 +1,10 @@
-{% extends "base.html" %}
- {% load static %}
- {% block content %}
- 
+{% extends "base.html" %} {% load static %} {% block content %}
+
 <!-- banner -->
 <div class="banner">
   <div class="container">
     <!-- heading -->
-	<h2 class="display-4">NoahideWisdom</h2>
+    <h2 class="display-4">NoahideWisdom</h2>
     <!-- paragraph -->
     <p class="fade-text">
       Welcome to NoahideWisdom, a platform dedicated to exploring the teachings
@@ -186,12 +184,9 @@
       <h2>Latest Blogs</h2>
     </div>
     <!-- heading -->
-    {% include "blog/post_list.html" %} {% include "blog/paginator.html" %}
-
-    <!-- <div class="text-center">
-						<a href="#" class="btn btn-default">See More</a>
-					</div> -->
+    {% include "blog/post_list.html" %}
   </div>
+  {% include "blog/paginator.html" %}
 
   <!-- subscribe -->
   <div class="subscribe" id="subscribe">

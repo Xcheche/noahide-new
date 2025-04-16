@@ -16,6 +16,8 @@ class HomeView(ListView):
     def get_queryset(self):
         return Post.objects.filter(status='published').order_by('-created_at')
     
+    
+    
 # class HomeView(TemplateView):
 #     template_name = 'blog/home.html'
 
