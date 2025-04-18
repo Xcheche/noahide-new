@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Comment,Tag
+from .models import Post, Comment,Tag,Subscriber
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -23,8 +23,18 @@ class TagAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     
     ordering = ('name',)
+    
+    
+    
+class SubscriberAdmin(admin.ModelAdmin):
+    list_display = ('email',)
+    search_fields = ('email',)
+    
+    ordering = ('email',)
+    list_filter = ('email',)    
 # Register your models here.
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Tag, TagAdmin)    
+admin.site.register(Tag, TagAdmin)   
+admin.site.register(Subscriber, SubscriberAdmin) 

@@ -193,10 +193,12 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 # Redirect users after login/logout
   # Redirect to profile after login
   
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = "signin"  # Redirect to login after logout
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = "signin"  # Redirect to login after logout
 
-
+LOGIN_URL = 'signin'  # Your custom login URL name
+LOGIN_REDIRECT_URL = '/'  # Where to go after login
+LOGOUT_REDIRECT_URL = 'signin'  # Where to go after logout
 
 #Upload path for ckeditor
 

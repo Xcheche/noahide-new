@@ -194,14 +194,29 @@
       <!-- subscribe content -->
       <div class="sub-content">
         <h3>Subscribe Here for Updates</h3>
-        <form role="form">
+        <form role="form" id="subscribe-form" method="post">
+          {% csrf_token %}
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Email..." />
+            <input
+              type="text"
+              class="form-control"
+              name="email"
+              placeholder="Email..."
+            />
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">Subscribe</button>
+              <button
+                class="sub btn btn-default"
+                style="background-color: #007bff; color: white"
+                type="submit"
+              >
+                Subscribe
+              </button>
             </span>
           </div>
           <!-- /input-group -->
+          <br />
+          <!-- <div id="message-box"></div> -->
+          <div id="sub-msg" style="margin-top: 10px"></div>
         </form>
       </div>
     </div>
@@ -210,3 +225,51 @@
 
   {% endblock %}
 </div>
+
+{% block extra_js %}
+
+
+<script>
+  document
+    .getElementById("subscribe-form")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = this.email.value;
+      const csrfToken = document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+      ).value;
+
+      fetch("", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrfToken,
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `email=${encodeURIComponent(email)}`,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          const msgDiv = document.getElementById("sub-msg");
+          msgDiv.innerText = data.message;
+          msgDiv.style.color = data.status === "success" ? "green" : "red";
+          if (data.status === "success") {
+  document.getElementById("subscribe-form").reset();
+  const button = document.querySelector("#subscribe-form button");
+  button.textContent = "Subscribed";
+  button.style.backgroundColor = "green";
+}
+
+          if (data.status === "success") {
+            const subscribeButton = document.querySelector(
+              "#subscribe-form .sub"
+            );
+            subscribeButton.textContent = "Subscribed";
+            subscribeButton.style.backgroundColor = "#28a745"; // green
+            subscribeButton.style.color = "white";
+          }
+        });
+    });
+</script>
+{% endblock %}

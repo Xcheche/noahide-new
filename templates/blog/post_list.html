@@ -21,11 +21,11 @@
                 {% endfor %} 
 				<br>
 				| By: <a href="{% url 'user-posts' post.author.username %}">Author</a> {{ post.author }} |
-                <a href="#" class="icon"><i class="fa fa-comment"></i> 12 Comments</a> |
-                <a href="#" class="icon"><i class="fa fa-eye"></i> 100 Views</a> |
-                <a href="#" class="icon"><i class="fa fa-thumbs-up"></i> Like</a> |
-                <a href="#" class="icon"><i class="fa fa-thumbs-down"></i> Dislike</a> |
-                <a href="#" class="icon"><i class="fa fa-share"></i> Share</a> 
+               
+                <a href="#" class="icon"><i class="fa fa-heart"></i> {{ post.likes.count }} Likes</a> |
+ <span class="badge bg-primary">Comments 💬 {{ post.comment_count }}</span> |
+                <a href="#" class="icon"><i class="fa fa-eye"></i> {{ post.views }} Views</a> |
+              
             </span>
             <!-- paragraph -->
             <p>{{ post.content|safe|truncatewords:20 }}</p>

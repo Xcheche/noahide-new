@@ -1,0 +1,62 @@
+
+
+
+
+
+
+<form id="commentForm" method="post" action="">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+
+
+<div class="container mt-5">
+    <h4>💬 Comments ({{ comments.count }})</h4>
+
+    {% if comments %}
+        {% for comment in comments %}
+            <div class="mb-3 p-3 border-start border-4 border-primary bg-white shadow-sm rounded">
+                <small class="text-muted">
+                    {{ comment.created_at|date:"F j, Y" }} — <strong>{{ comment.name }}</strong>
+                </small>
+                <div class="mt-2">
+                    {{ comment.content|linebreaks }}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted">No comments yet. Be the first to leave one!</p>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("commentForm");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    fetch("", {
+      method: "POST",
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "X-CSRFToken": document.querySelector('[name=csrfmiddlewaretoken]').value,
+      },
+      body: new FormData(form),
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageDiv = document.createElement("div");
+        messageDiv.textContent = data.message;
+        messageDiv.className = "alert alert-info mt-3";
+        form.parentNode.insertBefore(messageDiv, form.nextSibling);
+    });
+  });
+});
+</script>
+
+{% endblock %}
+

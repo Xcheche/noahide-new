@@ -1,10 +1,21 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (TemplateView,ListView, DetailView)
 
+from blog.forms import CommentForm
 from blog.models import Post
 from src import settings
 from django.contrib.auth import get_user_model
-
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.http import Http404, JsonResponse
+from .models import Subscriber
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 # Create your views here.
 
 class HomeView(ListView):
@@ -14,10 +25,33 @@ class HomeView(ListView):
     paginate_by = 3  # Number of posts per page
 
     def get_queryset(self):
-        return Post.objects.filter(status='published').order_by('-created_at')
+        return Post.objects.annotate(comment_count=Count('comments')).filter(status='published').order_by('-created_at')
     
+    ## Subscribe to newsletter
+    def post(self, request, *args, **kwargs):
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            email = request.POST.get("email")
+            try:
+                validate_email(email)
+                if Subscriber.objects.filter(email=email).exists():
+                    return JsonResponse({"status": "error", "message": "Already subscribed!"})
+                if "@"   not in email:
+                    return JsonResponse({"status": "error", "message": "Invalid email address."})
+                # Create a new subscriber
+                Subscriber.objects.create(email=email)
+                return JsonResponse({"status": "success", "message": "Subscribed successfully!"})
+            except ValidationError:
+                return JsonResponse({"status": "error", "message": "Enter a valid email address."})
+        return JsonResponse({"status": "error", "message": "Invalid request."})
     
-    
+
+
+
+
+
+#comment
+#@csrf_exempt  # only if you're handling this manually via AJAX
+
 # class HomeView(TemplateView):
 #     template_name = 'blog/home.html'
 
@@ -38,11 +72,49 @@ class HomeView(ListView):
     
     
 
-class PostDetailView(DetailView):
+# class PostDetailView(DetailView):
+#     template_name = 'blog/post_detail.html'
+#     model = Post
+#     context_object_name = 'post'
+    
+#     def get_object(self, queryset=None):
+#         post = super().get_object(queryset)
+#         post.views += 1
+#         post.save(update_fields=['views'])
+#         return post
+    
+    
+    
+
+class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = 'blog/post_detail.html'
     model = Post
     context_object_name = 'post'
-    
+
+    def get_object(self, queryset=None):
+        post = super().get_object(queryset)
+        post.views += 1
+        post.save(update_fields=['views'])
+        return post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        context['comments'] = self.object.comments.all().order_by('-created_at')
+        return context
+
+    @method_decorator(csrf_exempt)  # only needed if not using {% csrf_token %}
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()  # Get the post instance
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = self.object
+                comment.save()
+                return JsonResponse({"status": "success", "message": "Comment submitted!"})
+            return JsonResponse({"status": "error", "message": "Invalid form data."})
+        return JsonResponse({"status": "error", "message": "Invalid request."})
     
     
     
@@ -59,3 +131,35 @@ class UserPostListView(ListView):
         User = get_user_model()  # Get the actual custom User model
         user = get_object_or_404(User.objects.all(), username=self.kwargs.get('username'))
         return Post.objects.filter(author=user, status='published').order_by('-created_at')
+    
+    
+    
+    
+    
+# Likes
+
+@login_required
+def add_like(request, pk):
+    if request.method != 'POST':
+        raise Http404("Invalid request")
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user not in post.likes.all():
+        post.likes.add(request.user)
+
+    return redirect('post_detail', pk=pk)
+
+    
+    
+# Remove likes
+@login_required
+def unlike(request, pk):
+    if request.method != 'POST':
+        raise Http404("Invalid request")
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+
+    return redirect('post_detail', pk=pk)
+

@@ -20,7 +20,10 @@
  {% include "blog/paginator.html" %}
 
     <!--Pagination End-->
-    <div class="text-center">
-        <a style="margin-top: 10px;" href="{% url 'home' %}" class="btn btn-default">Back to Home</a>
-    </div>
+   <!-- Back Button -->
+  <div class="text-center mt-4">
+    <a href="{% url 'home' %}" class="btn btn-secondary px-4 py-2">
+      ← Back to Home
+    </a>
+  </div>
 {% endblock %}

@@ -31,6 +31,8 @@ class Post(models.Model): # This is the main model for the blog post
     
     image = models.ImageField(upload_to='blog_images/', default='default.png', blank=True, null=True)
     tags = models.ManyToManyField('Tag',  blank=True)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
+    views = models.PositiveIntegerField(default=0)
     
     
     objects = PostManager()  # Custom Manager
@@ -67,3 +69,15 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name    
+    
+    
+    
+class Subscriber(models.Model):
+    email = models.EmailField(unique=True)
+    
+
+    def __str__(self):
+        return self.email
+    class Meta:
+        verbose_name = 'Subscriber'
+        verbose_name_plural = 'Subscribers'    
