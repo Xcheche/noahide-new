@@ -43,8 +43,13 @@
         <span    class="badge bg-success fs-6 px-3 py-2">❤️ {{ post.likes.count }} Likes</span>
     <span class="text-primary">💬 {{ post.comments.count }} Comment{{ post.comments.count|pluralize }}</span>
     <a href="#" class="text-decoration-none text-secondary ms-3" onclick="navigator.share && navigator.share({ title: '{{ post.title }}', text: '{{ post.content|truncatewords:20 }}', url: window.location.href }); return false;">
-        <i class="fa fa-share-alt me-1"></i> Share
+        
     </a>
+
+    
+    <a href="{% url 'generate_share_link' post.id %}">
+    <i class="fa fa-share-alt me-1"></i> Share this
+</a>
 </span>
 
         {% if user.is_authenticated %}

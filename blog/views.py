@@ -90,13 +90,13 @@ class PostDetailView(LoginRequiredMixin, DetailView):
     template_name = 'blog/post_detail.html'
     model = Post
     context_object_name = 'post'
-
+# for views
     def get_object(self, queryset=None):
         post = super().get_object(queryset)
         post.views += 1
         post.save(update_fields=['views'])
         return post
-
+# for comments
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm()
@@ -163,3 +163,14 @@ def unlike(request, pk):
 
     return redirect('post_detail', pk=pk)
 
+
+
+
+#Share post
+
+def generate_share_link(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    share_url = request.build_absolute_uri(
+        reverse('post_detail', args=[str(post.id)])
+    )
+    return render(request, 'blog/share_link_output.html', {'share_url': share_url})

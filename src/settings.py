@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 # DEBUG = os.getenv('DEBUG', 'True') == 'False'
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost', 'cbe0-160-152-117-50.ngrok-free.app']  # Corrected name
+ALLOWED_HOSTS = ['127.0.0.1','localhost', '1556-160-152-152-133.ngrok-free.app']  # Corrected name
 # ALLOWED_HOSTS = ["*"]
 
 # Application definition
@@ -48,6 +48,9 @@ DJANGO_APPS = [
 PROJECT_APPS = ['accounts','blog',]
 THIRD_PARTY_APPS = [
     'ckeditor',
+    'bootstrap5',
+    "crispy_forms",
+    "crispy_bootstrap5",
    
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -92,10 +95,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     },
-    'test': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'test_db.sqlite3',
-    }
+    'TEST': {
+            'NAME': BASE_DIR / 'test_db.sqlite3', 
+        },
 }
 
 
@@ -132,6 +134,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+
+
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # Corrected name

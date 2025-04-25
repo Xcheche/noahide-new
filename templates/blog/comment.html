@@ -1,35 +1,43 @@
+{% load crispy_forms_tags %}
+{% load static %}
 
-
-
-
-
-
-<form id="commentForm" method="post" action="">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
-</form>
 
 
 
 <div class="container mt-5">
-    <h4>💬 Comments ({{ comments.count }})</h4>
+  <div class="row">
+    <!-- Comments Section -->
+    <div class="col-md-8">
+      <h4>💬 Comments ({{ comments.count }})</h4>
 
-    {% if comments %}
+      {% if comments %}
         {% for comment in comments %}
-            <div class="mb-3 p-3 border-start border-4 border-primary bg-white shadow-sm rounded">
-                <small class="text-muted">
-                    {{ comment.created_at|date:"F j, Y" }} — <strong>{{ comment.name }}</strong>
-                </small>
-                <div class="mt-2">
-                    {{ comment.content|linebreaks }}
-                </div>
+          <div class="mb-3 p-3 border-start border-4 border-primary bg-white shadow-sm rounded">
+            <small class="text-muted">
+              {{ comment.created_at|date:"F j, Y" }} — <strong>{{ comment.name }}</strong>
+            </small>
+            <div class="mt-2">
+              {{ comment.content|linebreaks }}
             </div>
+          </div>
         {% empty %}
-            <p class="text-muted">No comments yet. Be the first to leave one!</p>
+          <p class="text-muted">No comments yet. Be the first to leave one!</p>
         {% endfor %}
-    {% endif %}
+      {% endif %}
+    </div>
+
+    <!-- Comment Form -->
+    <div class="col-md-4">
+      <form id="commentForm" method="post" action="" class="bg-light p-4 rounded shadow-sm border border-primary mb-4  w-70">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
 </div>
+
+
 
 
 {% block extra_js %}
