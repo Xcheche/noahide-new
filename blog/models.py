@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from src import settings
+from django.core.exceptions import ValidationError
+
 
 # Create your models here.
 # This is a custom manager for the BlogPost model
@@ -51,11 +53,21 @@ class Post(models.Model): # This is the main model for the blog post
 
 
         
-# Comment model    
+# Comment model  
+
+BAD_WORDS = [
+    'fool', 'fuck you', 'idiot', 'nonsense', 'stupid', 'bad', 'fake', 'rubbish', 'monkey', 'animal'
+]
+
+def validate_no_bad_words(content):
+    if any(word in content.lower() for word in BAD_WORDS):
+        raise ValidationError("Your comment contains inappropriate language.")
+
+      
 class Comment(models.Model):
     name = models.CharField(max_length=100)
     post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
-    content = RichTextField(blank=False) 
+    content =  models.TextField(validators=[validate_no_bad_words]) 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

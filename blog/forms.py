@@ -1,6 +1,9 @@
 from django import forms
 
 from blog.models import Comment
+from django.core.exceptions import ValidationError
+
+
 
 
 
@@ -8,6 +11,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['name', 'content']
+        
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Comment', 'style': 'width: 100%;'}),
@@ -56,3 +60,4 @@ class CommentForm(forms.ModelForm):
             if not name or not content:
                 raise forms.ValidationError("Both fields are required")
             return cleaned_data
+        

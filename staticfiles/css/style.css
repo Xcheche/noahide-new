@@ -61,7 +61,8 @@ hr{
 
 header .navbar { 
 	margin: 0;
-	background: #3542ca;
+	
+	background: #0835a8;
 	border-radius: 0;
 	border-bottom: 2px solid rgba(0,0,0,0.2); 
 	box-shadow: 0 1px 15px rgba(0,0,0,0.2);
@@ -125,10 +126,11 @@ header .navbar-brand img {
  
 .banner {
 	/* background: #e47133; */
-	background: #3542ca;
+	background: #0835a8;
 	padding-top: 120px;
 	padding-bottom: 120px;
 	text-align: center;
+	margin-top: 25px;
 }
 
 .banner h2 {
@@ -485,5 +487,5 @@ footer .copy-right {
 }
 
 .fade-text {
-    animation: fadeInOut 10s infinite; /* Change 3s to control speed */
+    animation: fadeInOut 15s infinite; /* Change 3s to control speed */
 }

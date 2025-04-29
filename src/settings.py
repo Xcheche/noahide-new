@@ -10,12 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+
+
 from pathlib import Path
-from decouple import config
+import dj_database_url
+
+from dotenv import load_dotenv
 import os
+
+load_dotenv() 
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,15 +33,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-# DEBUG = os.getenv('DEBUG', 'True') == 'False'
-DEBUG = True
+ALLOWED_HOSTS = ['*']  # Corrected name
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost', '1556-160-152-152-133.ngrok-free.app']  # Corrected name
-# ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -51,6 +57,8 @@ THIRD_PARTY_APPS = [
     'bootstrap5',
     "crispy_forms",
     "crispy_bootstrap5",
+    'dbbackup',
+    'django_crontab',
    
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -90,17 +98,29 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'TEST': {
-            'NAME': BASE_DIR / 'test_db.sqlite3', 
-        },
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     },
+#     'TEST': {
+#             'NAME': BASE_DIR / 'test_db.sqlite3', 
+#         },
+# }
 
+DATABASE_URL = os.getenv('DATABASE_URL')
 
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -148,7 +168,13 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+
+# WhiteNoise static files storage
+if not DEBUG:  # ✅ Only use WhiteNoise in production
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
+    
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -159,18 +185,31 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 
+
+#Django DB Backup settings
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR / 'backup'}
+
+# CRONJOBS = [
+#     ('*/1 * * * *', 'config.perform_backup')  # every 1 minute projectname and function name
+# ]
+CRONJOBS = [
+    ('*/1 * * * *', 'config.cron.perform_backup', '>> /tmp/db_backup.log 2>&1')
+]
+
+
 # Cloudinary Configuration from Environment Variables
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": config("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": config("CLOUDINARY_API_KEY"),
-    "API_SECRET": config("CLOUDINARY_API_SECRET"),
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
     
 }
 
 cloudinary.config(
-    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
-    api_key=config("CLOUDINARY_API_KEY"),
-    api_secret=config("CLOUDINARY_API_SECRET"),
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
 )
 
 
@@ -182,6 +221,7 @@ cloudinary.config(
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 # Customize message tags for Bootstrap compatibility
+
 from django.contrib.messages import constants as message_constants
 
 MESSAGE_TAGS = {
@@ -221,3 +261,12 @@ CKEDITOR_CONFIGS = {
 }
 
 
+
+
+
+
+# Import local settings if available
+try:
+    from .local_settings import *
+except ImportError:
+    print("No local settings found. Looks like you are in production.")
