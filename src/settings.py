@@ -171,7 +171,7 @@ DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 # WhiteNoise static files storage
 if not DEBUG:  # ✅ Only use WhiteNoise in production
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
     
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
