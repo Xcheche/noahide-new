@@ -4,6 +4,7 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 from src import settings
 from django.core.exceptions import ValidationError
+from cloudinary import CloudinaryImage
 
 
 # Create your models here.
@@ -31,7 +32,18 @@ class Post(models.Model): # This is the main model for the blog post
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
     
-    image = models.ImageField(upload_to='blog_images/', default='default.png', blank=True, null=True)
+    image = models.ImageField(upload_to='blog_images/', default='default.png', blank=True, null=True,)
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.image:
+            cloudinary_image = CloudinaryImage(self.image.name)
+            resized_url = cloudinary_image.build_url(width=800, height=600, crop="limit")
+            
+            
+            # You can print or save this URL if you need it
+            print("Resized image URL:", resized_url)
+
     tags = models.ManyToManyField('Tag',  blank=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
     views = models.PositiveIntegerField(default=0)

@@ -3,6 +3,7 @@ from django.views.generic import (TemplateView,ListView, DetailView)
 
 from blog.forms import CommentForm
 from blog.models import Post
+from events.models import Event
 from src import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -26,6 +27,15 @@ class HomeView(ListView):
 
     def get_queryset(self):
         return Post.objects.annotate(comment_count=Count('comments')).filter(status='published').order_by('-created_at')
+    
+    
+    #Events
+    
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['events'] = Event.objects.filter(status='published').order_by('-created_at')  # or .upcoming() if you have a manager
+        return context
     
     ## Subscribe to newsletter
     def post(self, request, *args, **kwargs):

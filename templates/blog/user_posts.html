@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+  <title>{% block title %}Noahide|Userpost{% endblock %}</title>
     <h1 class="mb-3">Posts by {{ view.kwargs.username|capfirst }} ({{ page_obj.paginator.count }}) </h1>
     {% for post in posts %}
         <article class="media content-section">

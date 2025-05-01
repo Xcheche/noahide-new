@@ -90,6 +90,7 @@ def profile(request, pk):
 
 
 @login_required(login_url="signin")
+@login_required(login_url="signin")
 def settings(request):
     user_profile = request.user
 
@@ -98,7 +99,7 @@ def settings(request):
         
         bio = request.POST.get("bio", "")
 
-        user_profile.fullame = fullname
+        user_profile.fullname = fullname
        
         user_profile.bio = bio
 

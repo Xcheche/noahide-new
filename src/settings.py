@@ -51,7 +51,7 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-PROJECT_APPS = ['accounts','blog',]
+PROJECT_APPS = ['accounts','blog','events']
 THIRD_PARTY_APPS = [
     'ckeditor',
     'bootstrap5',
