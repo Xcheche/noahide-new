@@ -38,7 +38,8 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['noahide.com', 'www.noahide.com']
+# ALLOWED_HOSTS = ['noahide.com', 'www.noahide.com']
+ALLOWED_HOSTS = ['*']  # Allow all hosts for development purposes
   # Corrected name
 
 
