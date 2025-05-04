@@ -19,7 +19,20 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
 # Create your views here.
 
+
+from django.views.decorators.cache import cache_page
+
+from django.core.cache import cache
+
+# Set
+cache.set('my_key', 'hello', timeout=60)  # 60 seconds
+
+# Get
+value = cache.get('my_key')  # returns 'hello'
+
+# @cache_page(60 * 15)  # 15 minutes
 class HomeView(ListView):
+    
     model = Post
     template_name = 'blog/home.html'
     context_object_name = 'posts'
@@ -105,6 +118,15 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         post = super().get_object(queryset)
         post.views += 1
         post.save(update_fields=['views'])
+        return post
+    
+    def get_object(self, queryset=None):
+        post = super().get_object(queryset)
+        post.views += 1
+        post.save(update_fields=['views'])
+        # Clear the cache for the deleted post
+        cache_key = f'post_detail_{post.id}'
+        cache.delete(cache_key)
         return post
 # for comments
     def get_context_data(self, **kwargs):

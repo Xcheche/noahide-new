@@ -6,7 +6,19 @@ from django.contrib import messages
 # Removed incorrect import of `request` from `requests` library
 from .models import CustomUser
 import re
+from django.views.decorators.cache import cache_page
+from django.shortcuts import render
 
+from django.core.cache import cache
+
+# Set
+cache.set('my_key', 'hello', timeout=60)  # 60 seconds
+
+# Get
+value = cache.get('my_key')  # 
+
+
+#Getting user model
 CustomUser = get_user_model()
 
 def check_password_strength(password):
@@ -14,7 +26,8 @@ def check_password_strength(password):
     if len(password) < 8:
         return False
     return True
-
+# Check if the password contains at least one digit
+@cache_page(60 * 15)  # Cache for 15 minutes
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -60,13 +73,13 @@ def signup(request):
         return render(request, "accounts/signup.html")
 
 
-
+@cache_page(60 * 15)  # Cache for 15 minutes
 @login_required(login_url="signin")
 def logout(request):
     auth.logout(request)
     return redirect("signin")
-
-
+# # @cache_page(60 * 15)  # Cache for 15 minutes
+@cache_page(60 * 15)  # Cache for 15 minutes
 def signin(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -82,8 +95,8 @@ def signin(request):
             return render(request, "accounts/signin.html", {"username": username})
     else:
         return render(request, "accounts/signin.html")
-
-
+# # @cache_page(60 * 15)  # Cache for 15 minutes
+@cache_page(60 * 15)  # Cache for 15 minutes
 def profile(request, pk):
     user_profile = get_object_or_404(CustomUser, pk=pk)
     return render(request, "accounts/profile.html", {"user_profile": user_profile})
@@ -91,6 +104,8 @@ def profile(request, pk):
 
 @login_required(login_url="signin")
 @login_required(login_url="signin")
+#caching the settings view for 15 minutes
+@cache_page(60 * 15)  # Cache for 15 minutes
 def settings(request):
     user_profile = request.user
 

@@ -20,6 +20,14 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+from django.views.decorators.cache import cache_page
+
+
+# Apply cache_page decorator to the admin index page
+@cache_page(60 * 15)  # Cache for 15 minutes
+def cached_admin_view(request):
+    return admin.site.index(request)
+
 
 
 
