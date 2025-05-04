@@ -46,6 +46,7 @@ ALLOWED_HOSTS = ['*']  # Allow all hosts for development purposes
 # Application definition
 
 DJANGO_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,6 +64,22 @@ THIRD_PARTY_APPS = [
     'django_crontab',
    
 ]
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Noahide Wisdom",
+    "site_header": "Noahide Wisdom Dashboard",
+    "site_brand": "Rabbi Alexander",
+    "welcome_sign": "Welcome to Noahide Wisdom",
+    "show_ui_builder": True,  # Optional: Allows you to use a UI builder for the admin
+     "site_url": "/",  # or your homepage path
+}
+JAZZMIN_UI_TWEAKS = {
+    
+    "theme": "flatly",
+    "dark_mode_theme": "darkly",
+    "sidebar": "nav-compact",
+}
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 
