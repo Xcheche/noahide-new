@@ -134,13 +134,35 @@ else:
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 
-#filebased caching
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': BASE_DIR / 'django_cache',  # Or any path on your filesystem
+# #filebased caching
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#         'LOCATION': BASE_DIR / 'django_cache',  # Or any path on your filesystem
+#     }
+# }
+
+
+
+
+# Detect if running on Vercel
+ON_VERCEL = os.environ.get("VERCEL", False)
+
+if ON_VERCEL:
+    # Use in-memory cache on Vercel (safe, no file system writes)
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
     }
-}
+else:
+    # Use file-based cache locally (more persistent)
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+            'LOCATION': BASE_DIR / 'django_cache',
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
