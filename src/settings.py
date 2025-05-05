@@ -64,7 +64,7 @@ THIRD_PARTY_APPS = [
     'django_crontab',
    
 ]
-
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 JAZZMIN_SETTINGS = {
     "site_title": "Noahide Wisdom",
@@ -80,7 +80,7 @@ JAZZMIN_UI_TWEAKS = {
     "dark_mode_theme": "darkly",
     "sidebar": "nav-compact",
 }
-INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
+
 
 
 MIDDLEWARE = [
@@ -115,18 +115,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'src.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     },
-#     'TEST': {
-#             'NAME': BASE_DIR / 'test_db.sqlite3', 
-#         },
-# }
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 
