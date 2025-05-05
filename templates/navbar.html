@@ -44,8 +44,12 @@
                       <ul class="dropdown-menu" role="menu">
                         <li><a href="#event">Events</a></li>
                         <li><a href="#blog">Blog</a></li>
+                       
                         <li><a href="#subscribe">Subscribe</a></li>
-                        <li><a href="#team">Executive Team</a></li>
+                         {% if user.is_superuser or user.is_staff %}
+                        <li><a href="{% url 'send_newsletter' %}">Newsletter</a></li>
+                        <!-- Ensure the 'send_newsletter' URL is defined in urls.py and accessible -->
+                        {% endif %}
                         <li><a href="#contact">Contact</a></li>
                       </ul>
                     </li>

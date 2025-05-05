@@ -30,7 +30,7 @@ p{
 
 a{
 	text-decoration: none;
-color: black;
+color: #fff
 	/* color: #d65814; */
 }
 
@@ -148,7 +148,7 @@ header .navbar-brand img {
 	font-size: 13px;
 	line-height: 24px;
 	color: #ddd;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	letter-spacing: 0.055em;
 }
 
@@ -370,6 +370,7 @@ header .navbar-brand img {
 }
 .login-area form label ,
 .register-area form label { color: #fff; }
+
 .login-area form .form-control,
 .register-area form .form-control {
 	box-shadow: none !important;

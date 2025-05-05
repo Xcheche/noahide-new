@@ -1,0 +1,2 @@
+Requirement already satisfied: sendgrid in ./.venv/lib/python3.12/site-packages (3.6.5)
+Requirement already satisfied: python-http-client>=2.1.1 in ./.venv/lib/python3.12/site-packages (from sendgrid) (3.3.7)

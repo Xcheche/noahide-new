@@ -54,8 +54,9 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-PROJECT_APPS = ['accounts','blog','events']
+PROJECT_APPS = ['accounts','blog','events','newsletter',]
 THIRD_PARTY_APPS = [
+    "sendgrid_backend",  # Email handling
     'ckeditor',
     
     "crispy_forms",
@@ -66,6 +67,9 @@ THIRD_PARTY_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'whitenoise',
+   
+   
+    # "anymail",
    
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -293,9 +297,31 @@ CKEDITOR_CONFIGS = {
         'width': 700,
     }
 }
+#Email settings for AnymailResend
+
+# EMAIL_BACKEND = "anymail.backends.resend.EmailBackend"
+# ANYMAIL = {
+#     "RESEND_API_KEY": os.getenv("RESEND_API_KEY", default=""),  # Provide a default
+# }
+# DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", default="no-reply@example.com")
 
 
 
+
+
+# Email settings for SendGrid
+EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
+# Optional: For debugging purposes in development
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Set to True if you're testing without sending emails
+
+# Optional: To track email status (useful for production)
+SENDGRID_TRACK_EMAIL_OPENS = True
+
+# Set default email address for sending
+DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
 
 
 
