@@ -62,6 +62,10 @@ THIRD_PARTY_APPS = [
     "crispy_bootstrap5",
     'dbbackup',
     'django_crontab',
+    'gunicorn',
+    'cloudinary',
+    'cloudinary_storage',
+    'whitenoise',
    
 ]
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
