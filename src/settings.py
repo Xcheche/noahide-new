@@ -143,26 +143,16 @@ else:
 # }
 
 
-
-
-# Detect if running on Vercel
-ON_VERCEL = os.environ.get("VERCEL", False)
-
-if ON_VERCEL:
-    # Use in-memory cache on Vercel (safe, no file system writes)
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        }
+#Memory caching 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
-else:
-    # Use file-based cache locally (more persistent)
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-            'LOCATION': BASE_DIR / 'django_cache',
-        }
-    }
+}
+
+
+
+
 
 
 AUTH_PASSWORD_VALIDATORS = [
