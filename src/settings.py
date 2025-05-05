@@ -57,7 +57,7 @@ DJANGO_APPS = [
 PROJECT_APPS = ['accounts','blog','events']
 THIRD_PARTY_APPS = [
     'ckeditor',
-    'bootstrap5',
+    
     "crispy_forms",
     "crispy_bootstrap5",
     'dbbackup',
