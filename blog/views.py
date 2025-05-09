@@ -206,3 +206,9 @@ def generate_share_link(request, post_id):
         reverse('post_detail', args=[str(post.id)])
     )
     return render(request, 'blog/share_link_output.html', {'share_url': share_url})
+
+
+
+
+def videocall(request):
+    return render(request, 'blog/videocall.html')

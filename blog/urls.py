@@ -16,5 +16,7 @@ urlpatterns = [
     path('post/<int:pk>/like/', views.add_like, name="add_like"),
     path('post/<int:pk>/unlike/', views.unlike, name="unlike"),
     path('blog/share/link/<int:post_id>/', views.generate_share_link, name='generate_share_link'),
+    #video
+    path('video/', views.videocall, name='video'),
    
 ]  
