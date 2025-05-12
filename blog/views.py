@@ -20,15 +20,15 @@ from django.db.models import Count
 # Create your views here.
 
 
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 
-from django.core.cache import cache
+# from django.core.cache import cache
 
-# Set
-cache.set('my_key', 'hello', timeout=60)  # 60 seconds
+# # Set
+# cache.set('my_key', 'hello', timeout=60)  # 60 seconds
 
-# Get
-value = cache.get('my_key')  # returns 'hello'
+# # Get
+# value = cache.get('my_key')  # returns 'hello'
 
 # @cache_page(60 * 15)  # 15 minutes
 class HomeView(ListView):
@@ -72,40 +72,7 @@ class HomeView(ListView):
 
 
 
-#comment
-#@csrf_exempt  # only if you're handling this manually via AJAX
 
-# class HomeView(TemplateView):
-#     template_name = 'blog/home.html'
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         posts = Post.objects.filter(status='published').order_by('-created_at')
-        
-#         # Get the number of posts to show from the query string (default: 3)
-#         posts_to_show = int(self.request.GET.get('show', 3))
-
-#         # Limit the posts based on `posts_to_show`
-#         context['posts'] = posts[:posts_to_show]
-#         context['posts_to_show'] = posts_to_show
-#         context['total_posts'] = posts.count()  # To check if more posts exist
-#         return context
-    
-    
-    
-
-# class PostDetailView(DetailView):
-#     template_name = 'blog/post_detail.html'
-#     model = Post
-#     context_object_name = 'post'
-    
-#     def get_object(self, queryset=None):
-#         post = super().get_object(queryset)
-#         post.views += 1
-#         post.save(update_fields=['views'])
-#         return post
-    
     
     
 
@@ -125,8 +92,8 @@ class PostDetailView(LoginRequiredMixin, DetailView):
         post.views += 1
         post.save(update_fields=['views'])
         # Clear the cache for the deleted post
-        cache_key = f'post_detail_{post.id}'
-        cache.delete(cache_key)
+        # cache_key = f'post_detail_{post.id}'
+        # cache.delete(cache_key)
         return post
 # for comments
     def get_context_data(self, **kwargs):

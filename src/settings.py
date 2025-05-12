@@ -152,11 +152,11 @@ else:
 
 
 #Memory caching 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#     }
+# }
 
 
 
@@ -321,7 +321,9 @@ SENDGRID_SANDBOX_MODE_IN_DEBUG = False  # Set to True if you're testing without 
 SENDGRID_TRACK_EMAIL_OPENS = True
 
 # Set default email address for sending
-DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL")
+DEFAULT_FROM_EMAIL = "checheomenife@gmail.com"
+
+
 
 
 

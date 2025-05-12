@@ -1,5 +1,6 @@
+from src import settings
 from django.shortcuts import render, redirect, get_object_or_404
-from django.conf import settings 
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import auth
@@ -10,25 +11,26 @@ from .models import CustomUser
 from django.core.mail import send_mail
  # Ensure settings is imported correctly
 
-# Ensure DEFAULT_FROM_EMAIL is defined in settings.py
-if not hasattr(settings, 'DEFAULT_FROM_EMAIL'):
-    raise AttributeError("DEFAULT_FROM_EMAIL is not defined in your settings.py")
+
 # Removed unused import
 from django.contrib.auth import get_user_model
-from django.views.decorators.cache import cache_page
+# from django.views.decorators.cache import cache_page
 from django.shortcuts import render
 
-from django.core.cache import cache
+# from django.core.cache import cache
 
 from django.core.mail import EmailMultiAlternatives
 # Removed unused import
 from django.utils.html import strip_tags  # for email
 
-# Set
-cache.set('my_key', 'hello', timeout=60)  # 60 seconds
 
-# Get
-value = cache.get('my_key')  # 
+
+
+# # Set
+# cache.set('my_key', 'hello', timeout=60)  # 60 seconds
+
+# # Get
+# value = cache.get('my_key')  # 
 
 
 #Getting user model
@@ -50,7 +52,6 @@ def check_password_strength(password):
 
 
 
-# @cache_page(60 * 15)  # Cache for 15 minutes
 def signup(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -82,11 +83,17 @@ def signup(request):
                 html_message = f"""
                 <div style="max-width: 600px; margin: auto; padding: 20px; 
                             font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 8px;">
-                    <h2 style="color: #28a745;">Welcome to Noahide Wisdom!</h2>
+                    <h2 style="color: #1E168FFF;">Welcome to Noahide Wisdom!</h2>
                     <p>Dear {fullname},</p>
                     <p>Thank you for signing up. We're excited to have you on board!</p>
                     <p>You can now login and explore our platform.</p>
-                    <p style="text-align: center;"><a href="{request.build_absolute_uri('/signin/')}" style="padding: 10px 15px; background: #1E168FFF; color: white; text-decoration: none; border-radius: 5px;">Login Now</a></p>
+                    <p style="text-align: center;">
+
+                        <a href="{request.build_absolute_uri('signin')}" 
+                           style="display: inline-block; padding: 10px 20px; color: #fff; 
+                                  background-color: #1E168FFF; text-decoration: none; 
+                                  border-radius: 5px;">Login</a>
+                    </p>
                     <p>Warm regards,<br>The Noahide Wisdom Team</p>
                 </div>
                 """
@@ -102,13 +109,31 @@ def signup(request):
                 welcome_email.send()
 
                 # ✅ Notify Admin/Owner
-                send_mail(
-                    subject="New User Registered",
-                    message=f"A new user has signed up:\n\nName: {fullname}\nUsername: {username}\nEmail: {email}\nGender: {gender}",
+                # Notify Admin/Owner with styled email
+                admin_html_message = f"""
+                <div style="max-width: 600px; margin: auto; padding: 20px; 
+                            font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 8px;">
+                    <h2 style="color: #1E168FFF;">New User Registration</h2>
+                    <p>A new user has signed up on Noahide Wisdom:</p>
+                    <ul>
+                        <li><strong>Name:</strong> {fullname}</li>
+                        <li><strong>Username:</strong> {username}</li>
+                        <li><strong>Email:</strong> {email}</li>
+                        <li><strong>Gender:</strong> {gender}</li>
+                    </ul>
+                    <p style="color: #555;">Please review the details and take any necessary actions.</p>
+                </div>
+                """
+                admin_plain_text = strip_tags(admin_html_message)
+
+                admin_email = EmailMultiAlternatives(
+                    subject="New User Registered on Noahide Wisdom",
+                    body=admin_plain_text,
                     from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[settings.DEFAULT_FROM_EMAIL],  # Or a specific admin email
-                    fail_silently=False,
+                    to=[settings.DEFAULT_FROM_EMAIL],  # Or ['admin@example.com']
                 )
+                admin_email.attach_alternative(admin_html_message, "text/html")
+                admin_email.send()
 
                 messages.success(request, "Account created successfully!")
                 return redirect("signin")
@@ -176,6 +201,7 @@ def signin(request):
     else:
         return render(request, "accounts/signin.html")
 # Profilre
+@login_required(login_url="signin")
 def profile(request, pk):
     user_profile = get_object_or_404(CustomUser, pk=pk)
     return render(request, "accounts/profile.html", {"user_profile": user_profile})
@@ -184,9 +210,9 @@ def profile(request, pk):
 
 
 #Settings
+
 @login_required(login_url="signin")
-@login_required(login_url="signin")
-def settings(request):
+def setting(request):
     user_profile = request.user
 
     if request.method == "POST":
@@ -206,4 +232,4 @@ def settings(request):
 
         return redirect("profile", user_profile.pk)
 
-    return render(request, "accounts/settings.html", {"user_profile": user_profile})
+    return render(request, "accounts/setting.html", {"user_profile": user_profile})
