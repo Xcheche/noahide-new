@@ -5,6 +5,8 @@ from ckeditor.fields import RichTextField
 from src import settings
 from django.core.exceptions import ValidationError
 from cloudinary import CloudinaryImage
+from cloudinary.models import CloudinaryField
+import random
 
 
 # Create your models here.
@@ -17,6 +19,18 @@ class PostManager(models.Manager):
     def drafts(self): # This method returns all draft posts
         # It filters the posts based on the status field
         return self.filter(status="draft")
+    
+    
+
+
+def get_random_blog_image():
+    images = [
+        "https://images.unsplash.com/photo-1581091870622-1a3c6f8d3e0e",
+        "https://picsum.photos/seed/picsum/300/300",
+        "https://placekitten.com/300/300",
+        "https://placebear.com/300/300",
+    ]
+    return random.choice(images)
 # Post model
 class Post(models.Model): # This is the main model for the blog post
     STATUS_CHOICES = [
@@ -32,7 +46,14 @@ class Post(models.Model): # This is the main model for the blog post
     updated_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
     
-    image = models.ImageField(upload_to='blog_images/', default='default.png', blank=True, null=True,)
+    
+    
+    image = CloudinaryField(
+        "blog",
+        folder="blog_images/",
+        default=get_random_blog_image,
+        transformation={"width": 300, "height": 300, "crop": "fill"}
+    )
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
