@@ -51,14 +51,15 @@ class Post(models.Model): # This is the main model for the blog post
     )
     
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.image:
-            cloudinary_image = CloudinaryImage(self.image.name)
-            resized_url = cloudinary_image.build_url(width=800, height=600, crop="limit")
-            
-            
-            # You can print or save this URL if you need it
+     super().save(*args, **kwargs)
+     if self.image:
+        try:
+            cloudinary_image = CloudinaryImage(self.image.public_id)
+            resized_url = cloudinary_image.build_url(width=500, height=400, crop="limit")
             print("Resized image URL:", resized_url)
+        except AttributeError:
+            print("Image does not have a valid Cloudinary public_id.")
+
 
     tags = models.ManyToManyField('Tag',  blank=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)

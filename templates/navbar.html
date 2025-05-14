@@ -53,6 +53,7 @@
         <!-- <li><a href="#subscribe">Subscribe</a></li> -->
         {% if user.is_superuser or user.is_staff %}
           <li><a href="{% url 'send_newsletter' %}">Newsletter</a></li>
+          <li><a href="/admin/">Admin</a></li>
         {% endif %}
         <li><a href="#contact">Contact</a></li>
         <li><a href="{% url 'video' %}">VideoCall</a></li>
