@@ -1,24 +1,33 @@
 from django.db import models
 from ckeditor.fields import RichTextField 
 from cloudinary import CloudinaryImage
-
+from cloudinary.models import CloudinaryField
 # Create your models here.
 class Event(models.Model):
     title = models.CharField(max_length=200)
     description = RichTextField()
     created_at = models.DateTimeField(auto_now_add=True)  # <-- this must be here
-    image = models.ImageField(upload_to='events_images/', default='https://res.cloudinary.com/dl21gihhj/image/upload/v1745158564/samples/landscapes/nature-mountains.jpg', blank=True, null=True,max_length=300)
+    event_image = CloudinaryField(
+        "event_image",
+        folder="event_images/",
+        blank=True,
+        null=True,
+        # This is the transformation for the image
+        transformation={"width": 300, "height": 300, "crop": "fill"}
+    )
     status = models.CharField(choices=[('published', 'Published'), ('draft', 'Draft')])
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.image:
-            cloudinary_image = CloudinaryImage(self.image.name)
-            resized_url = cloudinary_image.build_url(width=300, height=300, crop="limit")
-            
-            
-            # You can print or save this URL if you need it
+     super().save(*args, **kwargs)
+     if self.event_image:
+        try:
+            cloudinary_image = CloudinaryImage(self.event_image.public_id)
+            resized_url = cloudinary_image.build_url(width=500, height=400, crop="limit")
             print("Resized image URL:", resized_url)
+        except AttributeError:
+            print("Image does not have a valid Cloudinary public_id.")
+            # You can print or save this URL if you need it
+          
 
     def __str__(self):
         return self.title

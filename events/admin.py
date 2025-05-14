@@ -6,7 +6,7 @@ from .models import Event
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('title', 'image', 'created_at', 'status')
+    list_display = ('title', 'event_image', 'created_at', 'status')
     list_filter = ('status',)
     search_fields = ('title', 'description')
     ordering = ('-created_at',)
