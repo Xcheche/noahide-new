@@ -67,7 +67,7 @@ THIRD_PARTY_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'whitenoise',
-    'gunicorn',
+   
    
    
     # "anymail",
