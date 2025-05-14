@@ -6,7 +6,7 @@ from src import settings
 from django.core.exceptions import ValidationError
 from cloudinary import CloudinaryImage
 from cloudinary.models import CloudinaryField
-import random
+
 
 
 # Create your models here.
@@ -22,15 +22,8 @@ class PostManager(models.Manager):
     
     
 
+# 
 
-def get_random_blog_image():
-    images = [
-        "https://images.unsplash.com/photo-1581091870622-1a3c6f8d3e0e",
-        "https://picsum.photos/seed/picsum/300/300",
-        "https://placekitten.com/300/300",
-        "https://placebear.com/300/300",
-    ]
-    return random.choice(images)
 # Post model
 class Post(models.Model): # This is the main model for the blog post
     STATUS_CHOICES = [
@@ -49,9 +42,11 @@ class Post(models.Model): # This is the main model for the blog post
     
     
     image = CloudinaryField(
-        "blog",
+        "post_image",
         folder="blog_images/",
-        default=get_random_blog_image,
+        blank=True,
+        null=True,
+        # This is the transformation for the image
         transformation={"width": 300, "height": 300, "crop": "fill"}
     )
     
