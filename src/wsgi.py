@@ -18,4 +18,4 @@ application = get_wsgi_application()
 
 
 # for vercel only
-# app = application
+app = application

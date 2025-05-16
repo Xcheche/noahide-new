@@ -53,6 +53,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pwa'
 ]
 PROJECT_APPS = ['accounts','blog','events','newsletter',]
 THIRD_PARTY_APPS = [

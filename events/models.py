@@ -9,7 +9,7 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # <-- this must be here
     event_image = CloudinaryField(
         "event_image",
-        folder="event_images/",
+        folder="event_image/",
         blank=True,
         null=True,
         # This is the transformation for the image
